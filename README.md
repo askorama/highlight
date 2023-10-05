@@ -1,5 +1,7 @@
 # Highlight
 
+[![Test CI](https://github.com/oramasearch/highlight/actions/workflows/test.yml/badge.svg)](https://github.com/oramasearch/highlight/actions/workflows/test.yml)
+
 Orama Highlight allows you to easily highlight substrings in a given input.
 
 # Installation

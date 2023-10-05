@@ -4,6 +4,19 @@
   "description": "",
   "main": "index.js",
   "type": "module",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts",
+      "browser": "./dist/index.global.js"
+    },
+    "./react": {
+      "require": "./dist/react/index.cjs",
+      "import": "./dist/react/index.js",
+      "types": "./dist/react/index.d.ts"
+    }
+  },
   "scripts": {
     "test": "bun test",
     "lint": "ts-standard --fix ./src/**/*.ts",
@@ -11,8 +24,15 @@
     "build:lib": "tsup --config tsup.lib.js",
     "build:react": "tsup --config tsup.react.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "full-text search",
+    "search",
+    "highlight"
+  ],
+  "author": {
+    "name": "Michele Riva",
+    "email": "michele.riva@oramasearch.com"
+  },
   "license": "ISC",
   "devDependencies": {
     "@types/react": "^18.2.25",
