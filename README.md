@@ -51,9 +51,9 @@ const inputString = 'The quick brown fox jumps over the lazy dog'
 const toHighlight = 'brown fox jump'
 
 const highlighted = highlight(inputString, toHighlight, {
-  caseSensitive: true, // Only highlight words that respect the second parameter's casing. Default is false
-  wholeWords: true, // Only highlight entire words, no prefixes
-  HTMLTag: 'div', // Default is "mark"
+  caseSensitive: true,        // Only highlight words that respect the second parameter's casing. Default is false
+  wholeWords: true,           // Only highlight entire words, no prefixes
+  HTMLTag: 'div',             // Default is "mark"
   CSSClass: 'my-custom-class' // default is 'orama-highlight'
 })
 ```
