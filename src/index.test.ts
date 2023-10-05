@@ -15,6 +15,22 @@ describe('default configuration', () => {
     assert.strictEqual(highlight(text1, searchTerm1).toString(), expectedResult1)
     assert.strictEqual(highlight(text2, searchTerm2).toString(), expectedResult2)
   })
+
+  it('should return the correct positions', () => {
+    const text = 'The quick brown fox jumps over the lazy dog'
+    const searchTerm = 'fox'
+    const expectedPositions = [{ start: 16, end: 18 }]
+
+    assert.deepStrictEqual(highlight(text, searchTerm).positions, expectedPositions)
+  })
+
+  it('should return multiple positions', () => {
+    const text = 'The quick brown fox jumps over the lazy dog'
+    const searchTerm = 'the'
+    const expectedPositions = [{ start: 0, end: 2 }, { start: 31, end: 33 }]
+
+    assert.deepStrictEqual(highlight(text, searchTerm).positions, expectedPositions)
+  })
 })
 
 describe('custom configuration', () => {
