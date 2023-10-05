@@ -18,7 +18,10 @@ const defaultOptions: HighlightOptions = {
 }
 
 export function highlight (text: string, searchTerm: string, options: HighlightOptions = defaultOptions): Highlight {
-  const { caseSensitive, wholeWords, HTMLTag, CSSClass } = options
+  const caseSensitive = options.caseSensitive ?? defaultOptions.caseSensitive
+  const wholeWords = options.wholeWords ?? defaultOptions.wholeWords
+  const HTMLTag = options.HTMLTag ?? defaultOptions.HTMLTag
+  const CSSClass = options.CSSClass ?? defaultOptions.CSSClass
   const regexFlags = caseSensitive ? 'g' : 'gi'
   const boundary = wholeWords ? '\\b' : ''
   const searchTerms = (caseSensitive ? searchTerm : searchTerm.toLowerCase()).split(/\s+/).join('|')
