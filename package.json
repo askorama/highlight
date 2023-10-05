@@ -15,11 +15,14 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^20.8.2",
     "@types/react": "^18.2.25",
+    "bun-types": "^1.0.4-canary.20231004T140131",
     "react": "^18.2.0",
     "ts-standard": "^12.0.2",
     "tsup": "^7.2.0",
     "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@orama/orama": "^1.2.9"
   }
 }

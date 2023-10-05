@@ -53,3 +53,9 @@ export function highlight (text: string, searchTerm: string, options: HighlightO
     toString: () => highlightedParts.join('')
   }
 }
+
+const inputString = 'The quick brown fox jumps over the lazy dog'
+const toHighlight = 'brown fox jump'
+
+const highlighted = highlight(inputString, toHighlight)
+console.log(highlighted.toString())
