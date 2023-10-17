@@ -24,7 +24,7 @@ export function highlight (text: string, searchTerm: string, options: HighlightO
   const CSSClass = options.CSSClass ?? defaultOptions.CSSClass
   const regexFlags = caseSensitive ? 'g' : 'gi'
   const boundary = wholeWords ? '\\b' : ''
-  const searchTerms = (caseSensitive ? searchTerm : searchTerm.toLowerCase()).split(/\s+/).join('|')
+  const searchTerms = (caseSensitive ? searchTerm : searchTerm.toLowerCase()).trim().split(/\s+/).join('|')
   const regex = new RegExp(`${boundary}${searchTerms}${boundary}`, regexFlags)
   const positions: Array<{ start: number, end: number }> = []
   const highlightedParts: string[] = []
