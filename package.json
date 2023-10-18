@@ -2,7 +2,7 @@
   "name": "@orama/highlight",
   "version": "0.0.2",
   "description": "Highlight any text in any JavaScript (browser, server, React, Vue, you name it!)",
-  "main": "index.js",
+  "main": "dist/index.js",
   "type": "module",
   "files": [
     "dist"
