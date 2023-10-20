@@ -30,11 +30,9 @@ export function highlight (text: string, searchTerm: string, options: HighlightO
   const highlightedParts: string[] = []
 
   let match
-
-  const sourceText = caseSensitive ? text : text.toLowerCase()
   let lastEnd = 0
 
-  while ((match = regex.exec(sourceText)) !== null) {
+  while ((match = regex.exec(text)) !== null) {
     const start = match.index
     const end = start + match[0].length - 1
 

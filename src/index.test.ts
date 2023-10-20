@@ -10,7 +10,7 @@ describe('default configuration', () => {
 
     const text2 = 'Yesterday all my troubles seemed so far away, now it looks as though they\'re here to stay oh, I believe in yesterday'
     const searchTerm2 = 'yesterday I was in trouble'
-    const expectedResult2 = '<mark class="orama-highlight">yesterday</mark> all my <mark class="orama-highlight">trouble</mark>s seemed so far away, now <mark class="orama-highlight">i</mark>t looks as though they\'re here to stay oh, <mark class="orama-highlight">i</mark> bel<mark class="orama-highlight">i</mark>eve <mark class="orama-highlight">i</mark>n <mark class="orama-highlight">yesterday</mark>'
+    const expectedResult2 = '<mark class="orama-highlight">Yesterday</mark> all my <mark class="orama-highlight">trouble</mark>s seemed so far away, now <mark class="orama-highlight">i</mark>t looks as though they\'re here to stay oh, <mark class="orama-highlight">I</mark> bel<mark class="orama-highlight">i</mark>eve <mark class="orama-highlight">i</mark>n <mark class="orama-highlight">yesterday</mark>'
 
     assert.strictEqual(highlight(text1, searchTerm1).toString(), expectedResult1)
     assert.strictEqual(highlight(text2, searchTerm2).toString(), expectedResult2)
@@ -34,6 +34,19 @@ describe('default configuration', () => {
 })
 
 describe('custom configuration', () => {
+  it('should correctly highlight a text (case sensitive)', () => {
+    const text1 = 'The quick brown fox jumps over the lazy dog'
+    const searchTerm1 = 'Fox'
+    const expectedResult1 = 'The quick brown fox jumps over the lazy dog'
+
+    const text2 = 'Yesterday all my troubles seemed so far away, now it looks as though they\'re here to stay oh, I believe in yesterday'
+    const searchTerm2 = 'yesterday I was in trouble'
+    const expectedResult2 = 'Yesterday all my <mark class="orama-highlight">trouble</mark>s seemed so far away, now it looks as though they\'re here to stay oh, <mark class="orama-highlight">I</mark> believe <mark class="orama-highlight">in</mark> <mark class="orama-highlight">yesterday</mark>'
+
+    assert.strictEqual(highlight(text1, searchTerm1, { caseSensitive: true }).toString(), expectedResult1)
+    assert.strictEqual(highlight(text2, searchTerm2, { caseSensitive: true }).toString(), expectedResult2)
+  })
+
   it('should correctly set a custom CSS class', () => {
     const text = 'The quick brown fox jumps over the lazy dog'
     const searchTerm = 'fox'
