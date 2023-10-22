@@ -116,3 +116,14 @@ describe('highlight function - infinite loop protection', () => {
     assert(regexExecStub.called)
   })
 })
+
+describe('trim method', () => {
+  it('should correctly trim the text', () => {
+    const text = 'The quick brown fox jumps over the lazy dog'
+    const searchTerm = 'fox'
+    const highlighter = new Highlight()
+
+    assert.strictEqual(highlighter.highlight(text, searchTerm).trim(10), '...rown <mark class="orama-highlight">fox</mark> j...')
+    assert.strictEqual(highlighter.highlight(text, searchTerm).trim(5), '...n <mark class="orama-highlight">fox</mark>...')
+  })
+})

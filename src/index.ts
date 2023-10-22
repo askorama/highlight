@@ -18,12 +18,17 @@ export class Highlight {
   private readonly options: HighlightOptions
   private _positions: Positions = []
   private _HTML: string = ''
+  private _searchTerm: string = ''
+  private _originalText: string = ''
 
   constructor (options: HighlightOptions = defaultOptions) {
     this.options = { ...defaultOptions, ...options }
   }
 
   public highlight (text: string, searchTerm: string): Highlight {
+    this._searchTerm = searchTerm
+    this._originalText = text
+
     const caseSensitive = this.options.caseSensitive ?? defaultOptions.caseSensitive
     const wholeWords = this.options.wholeWords ?? defaultOptions.wholeWords
     const HTMLTag = this.options.HTMLTag ?? defaultOptions.HTMLTag
@@ -64,6 +69,20 @@ export class Highlight {
     return this
   }
 
+  public trim (trimLength: number): string {
+    if (this._positions.length === 0 || this._originalText.length <= trimLength) {
+      return this._HTML
+    }
+
+    const firstMatch = this._positions[0].start
+    const start = Math.max(firstMatch - Math.floor(trimLength / 2), 0)
+    const end = Math.min(start + trimLength, this._originalText.length)
+    const trimmedContent = `${start === 0 ? '' : '...'}${this._originalText.slice(start, end)}${end < this._originalText.length ? '...' : ''}`
+
+    this.highlight(trimmedContent, this._searchTerm)
+    return this._HTML
+  }
+
   get positions (): Positions {
     return this._positions
   }
@@ -72,8 +91,3 @@ export class Highlight {
     return this._HTML
   }
 }
-
-const highlighter = new Highlight()
-
-const data = highlighter
-  .highlight('The quick brown fox jumps over the lazy dog', 'fox')
