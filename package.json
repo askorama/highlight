@@ -13,19 +13,13 @@
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts",
       "browser": "./dist/index.global.js"
-    },
-    "./react": {
-      "require": "./dist/react/index.cjs",
-      "import": "./dist/react/index.js",
-      "types": "./dist/react/index.d.ts"
     }
   },
   "scripts": {
     "test": "bun test",
     "lint": "ts-standard --fix ./src/**/*.ts",
-    "build": "npm run build:lib && npm run build:react",
-    "build:lib": "tsup --config tsup.lib.js",
-    "build:react": "tsup --config tsup.react.js"
+    "build": "npm run build:lib",
+    "build:lib": "tsup --config tsup.lib.js"
   },
   "keywords": [
     "full-text search",
