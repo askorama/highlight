@@ -31,8 +31,14 @@ export function highlight (text: string, searchTerm: string, options: HighlightO
 
   let match
   let lastEnd = 0
+  let previousLastIndex = -1
 
   while ((match = regex.exec(text)) !== null) {
+    if (regex.lastIndex === previousLastIndex) {
+      break
+    }
+    previousLastIndex = regex.lastIndex
+
     const start = match.index
     const end = start + match[0].length - 1
 

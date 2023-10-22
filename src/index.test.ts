@@ -1,5 +1,6 @@
-import { describe, it } from 'bun:test'
+import { describe, it, beforeEach, afterEach } from 'bun:test'
 import assert from 'node:assert'
+import sinon from 'sinon'
 import { highlight } from './index.js'
 
 describe('default configuration', () => {
@@ -69,5 +70,34 @@ describe('custom configuration', () => {
     const expectedResult = 'The quick brown <mark class="orama-highlight">fox</mark> jumps over the lazy dog'
 
     assert.strictEqual(highlight(text, searchTerm, { wholeWords: true }).toString(), expectedResult)
+  })
+})
+
+describe('highlight function - infinite loop protection', () => {
+  let regexExecStub: sinon.SinonStub
+
+  beforeEach(() => {
+    regexExecStub = sinon.stub(RegExp.prototype, 'exec')
+  })
+
+  afterEach(() => {
+    regexExecStub.restore()
+  })
+
+  it('should exit the loop if regex.lastIndex does not advance', () => {
+    const text = 'The quick brown fox jumps over the lazy dog'
+    const searchTerm = 'fox'
+
+    regexExecStub.callsFake(function () {
+      // @ts-expect-error
+      this.lastIndex = 0
+      return null
+    })
+
+    const result = highlight(text, searchTerm)
+
+    assert.strictEqual(result.toString(), text)
+
+    assert(regexExecStub.called)
   })
 })
