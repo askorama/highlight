@@ -127,5 +127,7 @@ describe('trim method', () => {
     assert.strictEqual(highlighter.highlight(text, searchTerm).trim(5), '...n <mark class="orama-highlight">fox</mark>...')
     assert.strictEqual(highlighter.highlight(text, 'the').trim(5), '<mark class="orama-highlight">The</mark> q...')
     assert.strictEqual(highlighter.highlight(text, 'dog').trim(5), '...y <mark class="orama-highlight">dog</mark>')
+    assert.strictEqual(highlighter.highlight(text, 'dog').trim(5, false), 'y <mark class="orama-highlight">dog</mark>')
+    assert.strictEqual(highlighter.highlight(text, 'the').trim(5, false), '<mark class="orama-highlight">The</mark> q')
   })
 })

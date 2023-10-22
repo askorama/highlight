@@ -69,7 +69,7 @@ export class Highlight {
     return this
   }
 
-  public trim (trimLength: number): string {
+  public trim (trimLength: number, ellipsis: boolean = true): string {
     if (this._positions.length === 0 || this._originalText.length <= trimLength) {
       return this._HTML
     }
@@ -77,7 +77,7 @@ export class Highlight {
     const firstMatch = this._positions[0].start
     const start = Math.max(firstMatch - Math.floor(trimLength / 2), 0)
     const end = Math.min(start + trimLength, this._originalText.length)
-    const trimmedContent = `${start === 0 ? '' : '...'}${this._originalText.slice(start, end)}${end < this._originalText.length ? '...' : ''}`
+    const trimmedContent = `${start === 0 || !ellipsis ? '' : '...'}${this._originalText.slice(start, end)}${end < this._originalText.length && ellipsis ? '...' : ''}`
 
     this.highlight(trimmedContent, this._searchTerm)
     return this._HTML
