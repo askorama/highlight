@@ -1,7 +1,7 @@
 import { describe, it, beforeEach, afterEach } from 'bun:test'
 import assert from 'node:assert'
 import sinon from 'sinon'
-import { highlight } from './index.js'
+import { Highlight } from './index.js'
 
 describe('default configuration', () => {
   it('should correctly highlight a text', () => {
@@ -13,8 +13,10 @@ describe('default configuration', () => {
     const searchTerm2 = 'yesterday I was in trouble'
     const expectedResult2 = '<mark class="orama-highlight">Yesterday</mark> all my <mark class="orama-highlight">trouble</mark>s seemed so far away, now <mark class="orama-highlight">i</mark>t looks as though they\'re here to stay oh, <mark class="orama-highlight">I</mark> bel<mark class="orama-highlight">i</mark>eve <mark class="orama-highlight">i</mark>n <mark class="orama-highlight">yesterday</mark>'
 
-    assert.strictEqual(highlight(text1, searchTerm1).toString(), expectedResult1)
-    assert.strictEqual(highlight(text2, searchTerm2).toString(), expectedResult2)
+    const highlighter = new Highlight()
+
+    assert.strictEqual(highlighter.highlight(text1, searchTerm1).HTML, expectedResult1)
+    assert.strictEqual(highlighter.highlight(text2, searchTerm2).HTML, expectedResult2)
   })
 
   it('should return the correct positions', () => {
@@ -22,7 +24,9 @@ describe('default configuration', () => {
     const searchTerm = 'fox'
     const expectedPositions = [{ start: 16, end: 18 }]
 
-    assert.deepStrictEqual(highlight(text, searchTerm).positions, expectedPositions)
+    const highlighter = new Highlight()
+
+    assert.deepStrictEqual(highlighter.highlight(text, searchTerm).positions, expectedPositions)
   })
 
   it('should return multiple positions', () => {
@@ -30,7 +34,9 @@ describe('default configuration', () => {
     const searchTerm = 'the'
     const expectedPositions = [{ start: 0, end: 2 }, { start: 31, end: 33 }]
 
-    assert.deepStrictEqual(highlight(text, searchTerm).positions, expectedPositions)
+    const highlighter = new Highlight()
+
+    assert.deepStrictEqual(highlighter.highlight(text, searchTerm).positions, expectedPositions)
   })
 })
 
@@ -44,8 +50,10 @@ describe('custom configuration', () => {
     const searchTerm2 = 'yesterday I was in trouble'
     const expectedResult2 = 'Yesterday all my <mark class="orama-highlight">trouble</mark>s seemed so far away, now it looks as though they\'re here to stay oh, <mark class="orama-highlight">I</mark> believe <mark class="orama-highlight">in</mark> <mark class="orama-highlight">yesterday</mark>'
 
-    assert.strictEqual(highlight(text1, searchTerm1, { caseSensitive: true }).toString(), expectedResult1)
-    assert.strictEqual(highlight(text2, searchTerm2, { caseSensitive: true }).toString(), expectedResult2)
+    const highlighter = new Highlight({ caseSensitive: true })
+
+    assert.strictEqual(highlighter.highlight(text1, searchTerm1).HTML, expectedResult1)
+    assert.strictEqual(highlighter.highlight(text2, searchTerm2).HTML, expectedResult2)
   })
 
   it('should correctly set a custom CSS class', () => {
@@ -53,7 +61,9 @@ describe('custom configuration', () => {
     const searchTerm = 'fox'
     const expectedResult = 'The quick brown <mark class="custom-class">fox</mark> jumps over the lazy dog'
 
-    assert.strictEqual(highlight(text, searchTerm, { CSSClass: 'custom-class' }).toString(), expectedResult)
+    const highlighter = new Highlight({ CSSClass: 'custom-class' })
+
+    assert.strictEqual(highlighter.highlight(text, searchTerm).HTML, expectedResult)
   })
 
   it('should correctly use a custom HTML tag', () => {
@@ -61,7 +71,9 @@ describe('custom configuration', () => {
     const searchTerm = 'fox'
     const expectedResult = 'The quick brown <div class="orama-highlight">fox</div> jumps over the lazy dog'
 
-    assert.strictEqual(highlight(text, searchTerm, { HTMLTag: 'div' }).toString(), expectedResult)
+    const highlighter = new Highlight({ HTMLTag: 'div' })
+
+    assert.strictEqual(highlighter.highlight(text, searchTerm).HTML, expectedResult)
   })
 
   it('should correctly highlight whole words only', () => {
@@ -69,7 +81,9 @@ describe('custom configuration', () => {
     const searchTerm = 'fox jump'
     const expectedResult = 'The quick brown <mark class="orama-highlight">fox</mark> jumps over the lazy dog'
 
-    assert.strictEqual(highlight(text, searchTerm, { wholeWords: true }).toString(), expectedResult)
+    const highlighter = new Highlight({ wholeWords: true })
+
+    assert.strictEqual(highlighter.highlight(text, searchTerm).HTML, expectedResult)
   })
 })
 
@@ -94,9 +108,10 @@ describe('highlight function - infinite loop protection', () => {
       return null
     })
 
-    const result = highlight(text, searchTerm)
+    const highlighter = new Highlight()
+    const result = highlighter.highlight(text, searchTerm)
 
-    assert.strictEqual(result.toString(), text)
+    assert.strictEqual(result.HTML, text)
 
     assert(regexExecStub.called)
   })
