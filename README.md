@@ -14,15 +14,15 @@ bun i @orama/highlight
 # Usage
 
 ```js
-import { highlight } from '@orama/highlight'
+import { Highlight } from '@orama/highlight'
 
 const inputString = 'The quick brown fox jumps over the lazy dog'
 const toHighlight = 'brown fox jump'
 
-const highlighted = highlight(inputString, toHighlight)
+const highlighter = new Highlight()
+const highlighted = highlighter.highlight(inputString, toHighlight)
 
 console.log(highlighted.positions)
-
 // [
 //    {
 //      start: 10,
@@ -36,23 +36,17 @@ console.log(highlighted.positions)
 //    }
 //  ]
 
-console.log(highlighted.toString())
-
+console.log(highlighted.HTML)
 // "The quick <mark class="orama-highlight">brown</mark> <mark class="orama-highlight">fox</mark> <mark class="orama-highlight">jump</mark>s over the lazy dog"
+
+console.log(highlighted.trim(10))
+// "...uick <mark class="orama-highlight">brown</mark>..."
 ```
 
-By default, `@orama/highlight` returns an object containing two properties:
-
-- `toString`, a function that returns valid HTML code with highlighted substrings wrapped into a `<mark>` tag and a `orama-highlight` CSS class
-- `positions`an array of positions for all the highlighted substrings in the original input
-
-You can always customize the library behavior by passing a third parameter with the following parameters:
+You can always customize the library behavior by passing some options to the class constructor:
 
 ```js
-const inputString = 'The quick brown fox jumps over the lazy dog'
-const toHighlight = 'brown fox jump'
-
-const highlighted = highlight(inputString, toHighlight, {
+const highlighted = new Highlight({
   caseSensitive: true,        // Only highlight words that respect the second parameter's casing. Default is false
   wholeWords: true,           // Only highlight entire words, no prefixes
   HTMLTag: 'div',             // Default is "mark"
