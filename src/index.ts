@@ -4,8 +4,9 @@ export interface HighlightOptions {
   HTMLTag?: string
   CSSClass?: string
 }
+export type Position = { start: number, end: number }
 
-type Positions = Array<{ start: number, end: number }>
+type Positions = Position[]
 
 const defaultOptions: HighlightOptions = {
   caseSensitive: false,
