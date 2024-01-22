@@ -131,3 +131,15 @@ describe('trim method', () => {
     assert.strictEqual(highlighter.highlight(text, 'the').trim(5, false), '<mark class="orama-highlight">The</mark> q')
   })
 })
+
+describe('special characters', () => {
+  it('should correctly highlight a text with special characters', () => {
+    const text = 'C++ is a hell of a language'
+    const searchTerm = 'C++'
+    const expectedResult = '<mark class="orama-highlight">C++</mark> is a hell of a language'
+
+    const highlighter = new Highlight()
+
+    assert.strictEqual(highlighter.highlight(text, searchTerm).HTML, expectedResult)
+  })
+})
