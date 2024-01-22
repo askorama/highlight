@@ -36,7 +36,7 @@ export class Highlight {
     const CSSClass = this.options.CSSClass ?? defaultOptions.CSSClass
     const regexFlags = caseSensitive ? 'g' : 'gi'
     const boundary = wholeWords ? '\\b' : ''
-    const searchTerms = (caseSensitive ? searchTerm : searchTerm.toLowerCase()).trim().split(/\s+/).join('|')
+    const searchTerms = this.escapeRegExp(caseSensitive ? searchTerm : searchTerm.toLowerCase()).trim().split(/\s+/).join('|')
     const regex = new RegExp(`${boundary}${searchTerms}${boundary}`, regexFlags)
     const positions: Array<{ start: number, end: number }> = []
     const highlightedParts: string[] = []
@@ -90,5 +90,9 @@ export class Highlight {
 
   get HTML (): string {
     return this._HTML
+  }
+
+  private escapeRegExp(string: string): string {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 }
