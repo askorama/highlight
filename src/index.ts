@@ -27,7 +27,7 @@ export class Highlight {
   }
 
   public highlight(text: string, searchTerm: string): Highlight {
-    this._searchTerm = searchTerm;
+    this._searchTerm = searchTerm ?? "";
     this._originalText = text ?? "";
 
     const caseSensitive =
@@ -38,7 +38,7 @@ export class Highlight {
     const regexFlags = caseSensitive ? "g" : "gi";
     const boundary = wholeWords ? "\\b" : "";
     const searchTerms = this.escapeRegExp(
-      caseSensitive ? searchTerm : searchTerm.toLowerCase()
+      caseSensitive ? this._searchTerm : this._searchTerm.toLowerCase()
     )
       .trim()
       .split(/\s+/)

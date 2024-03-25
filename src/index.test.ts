@@ -205,12 +205,21 @@ describe("special characters", () => {
 });
 
 describe("empty example", () => {
+  // even though it is not expected we should make sure it won't break
   it("should not break when text is null", () => {
     const searchTerm = "C";
     const highlighter = new Highlight();
 
-    // even though it is not expected we should make sure it won't break
     // @ts-expect-error
     assert.strictEqual(highlighter.highlight(null, searchTerm).HTML, "");
+  });
+  it("should not break when search term is null", () => {
+    const highlighter = new Highlight();
+
+    assert.strictEqual(
+      // @ts-expect-error
+      highlighter.highlight(null, null).HTML,
+      '<mark class="orama-highlight"></mark>'
+    );
   });
 });
