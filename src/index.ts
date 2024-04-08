@@ -82,10 +82,11 @@ export class Highlight {
   }
 
   public trim(trimLength: number, ellipsis: boolean = true): string {
-    if (
-      this._positions.length === 0 ||
-      this._originalText.length <= trimLength
-    ) {
+    if (this._positions.length === 0) {
+      return `${this._HTML.substring(0, trimLength)}${ellipsis ? `...` : ""}`;
+    }
+
+    if (this._originalText.length <= trimLength) {
       return this._HTML;
     }
 
