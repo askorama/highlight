@@ -186,6 +186,20 @@ describe("trim method", () => {
       '<mark class="orama-highlight">The</mark> q'
     );
   });
+  it("should correctly trim the text when no match is found", () => {
+    const text = "The quick brown dog jumps over the lazy dog in a forrest";
+    const searchTerm = "fox";
+    const highlighter = new Highlight();
+
+    assert.strictEqual(
+      highlighter.highlight(text, searchTerm).trim(10),
+      "The quick ..."
+    );
+    assert.strictEqual(
+      highlighter.highlight(text, searchTerm).trim(10, false),
+      "The quick "
+    );
+  });
 });
 
 describe("special characters", () => {
